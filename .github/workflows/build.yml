@@ -37,19 +37,20 @@ jobs:
         run: npm run dist
         shell: bash
 
-      - name: Get version from package.json
+      - name: Get package version
         id: get_version
-        run: node -e "process.stdout.write(require('./package').version)" >> $GITHUB_ENV
+        run: echo "::set-output name=VERSION::v$(node -p \"require('./package.json').version\")"
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "v${{ env.VERSION }}"
-          release_name: "v${{ env.VERSION }}"
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          release_name: ${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
+
 
       - name: Upload Release Assets
         uses: actions/upload-release-asset@v1
