@@ -1,0 +1,76 @@
+name: Build
+
+on: push
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install Dependencies
+        run: npm ci
+        shell: bash
+
+      - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run dist
+        shell: bash
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "VERSION=$(node -p -e \"require('./package.json').version\")" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ env.VERSION }}"
+          release_name: "v${{ env.VERSION }}"
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/latest.yml
+          asset_name: latest.yml
+          asset_content_type: application/octet-stream
+
+      - name: Upload Windows Installer
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/ReinaLauncher-setup-${{ env.VERSION }}.exe
+          asset_name: ReinaLauncher-setup-${{ env.VERSION }}.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload Blockmap
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/ReinaLauncher-setup-${{ env.VERSION }}.exe.blockmap
+          asset_name: ReinaLauncher-setup-${{ env.VERSION }}.exe.blockmap
+          asset_content_type: application/octet-stream
