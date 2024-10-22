@@ -43,6 +43,8 @@ jobs:
         run: |
           $version = "v$((Get-Content .\package.json | ConvertFrom-Json).version)"
           echo "VERSION=$version" >> $env:GITHUB_ENV
+          $noversion = $version.TrimStart('v')
+          echo "NOVERSION=$noversion" >> $env:GITHUB_ENV
 
       - name: Create GitHub Release
         id: create_release
@@ -71,8 +73,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/Reina Launcher-setup-${{ env.VERSION }}.exe
-          asset_name: Reina Launcher-setup-${{ env.VERSION }}.exe
+          asset_path: ./dist/Reina Launcher-setup-${{ env.NOVERSION }}.exe
+          asset_name: Reina Launcher-setup-${{ env.NOVERSION }}.exe
           asset_content_type: application/octet-stream
 
       - name: Upload Blockmap
@@ -81,6 +83,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/Reina Launcher-setup-${{ env.VERSION }}.exe.blockmap
-          asset_name: Reina Launcher-setup-${{ env.VERSION }}.exe.blockmap
+          asset_path: ./dist/Reina Launcher-setup-${{ env.NOVERSION }}.exe.blockmap
+          asset_name: Reina Launcher-setup-${{ env.NOVERSION }}.exe.blockmap
           asset_content_type: application/octet-stream
