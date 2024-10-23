@@ -22,22 +22,22 @@ newsErrorNoneSpan = "No News"
 loginCancelText = "Cancel"
 loginSubheader = "MINECRAFT LOGIN"
 loginEmailError = "* Invalid Value"
-loginEmailPlaceholder = "EMAIL OR USERNAME"
+loginEmailPlaceholder = "EMAIL"
 loginPasswordError = "* Required"
 loginPasswordPlaceholder = "PASSWORD"
-loginForgotPasswordLink = "https://minecraft.net/password/forgot/"
+loginForgotPasswordLink = "https://reinauth.com/"
 loginForgotPasswordText = "forgot password?"
 loginRememberMeText = "remember me?"
 loginButtonText = "LOGIN"
-loginNeedAccountLink = "https://minecraft.net/store/minecraft-java-edition/"
+loginNeedAccountLink = "https://reinauth.com/"
 loginNeedAccountText = "Need an Account?"
 loginPasswordDisclaimer1 = "Your password is sent directly to mojang and never stored."
-loginPasswordDisclaimer2 = "{appName} is not affiliated with Mojang AB."
+loginPasswordDisclaimer2 = "{appName} is not affiliated with ReinAUTH."
 
 [ejs.loginOptions]
 loginOptionsTitle = "Login Options"
 loginWithMicrosoft = "Login with Microsoft"
-loginWithMojang = "Login with Mojang"
+loginWithMojang = "Login with ReinAUTH"
 cancelButton = "Cancel"
 
 [ejs.overlay]
@@ -212,7 +212,7 @@ checking = "Checking for News"
 
 [js.landing.discord]
 loading = "Loading game.."
-joining = "Sailing to Westeros!"
+joining = "Sailing to Reina!"
 joined = "Exploring the Realm!"
 
 [js.overlay]
