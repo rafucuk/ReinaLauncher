@@ -394,6 +394,9 @@ class ProcessBuilder {
         }
         args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
         args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
+        args.push('-Dfile.encoding=UTF-8')
+        args.push('-Duser.language=en')
+        args.push('-Duser.country=US')
         args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
         args.push('-Djava.library.path=' + tempNativePath)
 
@@ -445,6 +448,9 @@ class ProcessBuilder {
         }
         args.push('-Xmx' + ConfigManager.getMaxRAM(this.server.rawServer.id))
         args.push('-Xms' + ConfigManager.getMinRAM(this.server.rawServer.id))
+        args.push('-Dfile.encoding=UTF-8')
+        args.push('-Duser.language=en')
+        args.push('-Duser.country=US')
         args = args.concat(ConfigManager.getJVMOptions(this.server.rawServer.id))
 
         // Main Java Class
